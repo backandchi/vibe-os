@@ -230,6 +230,6 @@ python-pip
 uv
 nodejs
 npm
-bun-bin
+bun
 docker
 docker-compose
