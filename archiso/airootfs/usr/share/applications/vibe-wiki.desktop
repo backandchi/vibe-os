@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=VibeOS Wiki & Cheatsheet
+Comment=VibeOS Shortcuts, AI Guide and Documentation
+Exec=vibe-wiki
+Icon=help-browser
+Terminal=true
+Type=Application
+Categories=Utility;Documentation;Development;
+Keywords=vibe;wiki;cheatsheet;shortcuts;help;
