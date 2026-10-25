@@ -1,23 +1,32 @@
 # 🚀 VibeOS - To'liq Qo'llanma & Cheatsheet (Vibe Wiki)
 
-VibeOS ga xush kelibsiz! Ushbu tizim zamonaviy dasturchilar, sun'iy intellekt (AI) bilan kod yozuvchilar va maksimal unumdorlikni xohlovchilar uchun maxsus yaratilgan.
+**Tizim asoschisi va muallifi:** [backandchi](https://github.com/backandchi)  
+**Rasmiy loyiha:** [github.com/backandchi/vibe-os](https://github.com/backandchi/vibe-os)  
+**Til:** O'zbek tili 🇺🇿
 
 ---
 
-## 🪟 1. Windows Foydalanuvchilari Uchun Qulay Qisqartmalar (Hotkeys)
+## 🌟 VibeOS Haqida
+VibeOS — bu O'zbekiston va butun dunyo dasturchilari uchun yaratilgan, yuqori unumdorlikka ega, sun'iy intellekt (AI) bilan kod yozishga (Vibe Coding) moslashtirilgan zamonaviy operatsion tizimdir.
 
-Windows'dan o'tgan dasturchilar darhol o'zini uydagidek his qilishi uchun tanish tugmalar to'liq sozlangan:
+Muallif **backandchi** tomonidan tizimga Windows foydalanuvchilari uchun qulay bo'lgan barcha tanish tugmalar va eng so'nggi dasturchi asboblari birlashtirildi.
 
-| Qisqartma | Vazifasi | Qaysi dastur ochiladi? |
+---
+
+## 🪟 1. Windows Foydalanuvchilari Uchun Qisqartmalar (Hotkeys)
+
+Windows tizimidan o'tgan dasturchilar darhol qulay ishlashi uchun barcha standart tugmalar sozlangan:
+
+| Tugmalar birikmasi | Nima ish bajaradi? | Ochiladigan dastur |
 | :--- | :--- | :--- |
-| **`Win + E`** | Fayllar menejerini ochish | Dolphin / Thunar (Fayllar) |
-| **`Win + V`** | Nusxa olish tarixi (Clipboard History) | Cliphist (Rofi dmenu) |
-| **`Win + Shift + S`** | Ekran qismini rasmga olish (Snipping Tool) | Grim + Slurp + Swappy |
-| **`Ctrl + Shift + Esc`** | Vazifalar menejeri (Task Manager) | Btop / Plasma System Monitor |
-| **`Win + R`** | Dasturlarni qidirish va ishga tushirish (Run) | KRunner / Rofi Application Launcher |
-| **`Win + D`** | Ish stolini ko'rsatish (Show Desktop) | Barcha oynalarni yashirish |
-| **`Win + L`** | Ekranni qulflash (Lock Screen) | Lock Screen |
-| **`Alt + Tab`** | Oynalar orasida o'tish | Window Switcher |
+| **`Win + E`** | Fayllar boshqaruvchisini ochish | Dolphin / Thunar (Fayl menejeri) |
+| **`Win + V`** | Nusxa olish tarixi (Clipboard tarixi) | Cliphist (Kopiya qilingan matnlar) |
+| **`Win + Shift + S`** | Ekranni qirqib rasmga olish (Snipping Tool) | Grim + Slurp + Swappy |
+| **`Ctrl + Shift + Esc`** | Vazifalar menejeri (Task Manager) | Btop (Protsessor, RAM, GPU nazorati) |
+| **`Win + R`** | Dasturlarni tezkor qidirish va ochish (Run) | Rofi / KRunner |
+| **`Win + D`** | Ish stolini ko'rsatish | Barcha ochiq oynalarni yashirish |
+| **`Win + L`** | Kompyuter ekranini qulflash | Lock Screen |
+| **`Alt + Tab`** | Oynalar orasida tezkor o'tish | Window Switcher |
 
 ---
 
@@ -25,15 +34,16 @@ Windows'dan o'tgan dasturchilar darhol o'zini uydagidek his qilishi uchun tanish
 
 Kod yozish jarayonida qo'lni klaviaturadan uzmaslik uchun:
 
-| Qisqartma | Vazifasi | Izoh |
+| Tugmalar birikmasi | Vazifasi | Izoh |
 | :--- | :--- | :--- |
-| **`Win + Space`** | **Floating AI Scratchpad** | Tezkor AI bilan kod tahlili va suhbat |
-| **`Win + /` yoki `Win + F1`** | **Vibe Wiki** | Shu qo'llanmani darhol ekranga chiqaradi |
-| **`Win + Enter`** | Tezkor Terminal | Kitty / Alacritty GPU-accelerated terminal |
+| **`Win + Space`** | **Floating AI Scratchpad** | Ekranda suzuvchi AI yordamchi oynasi |
+| **`Win + /` yoki `Win + F1`** | **Vibe Wiki** | Ushbu o'zbekcha qo'llanmani darhol ekranga chiqaradi |
+| **`Win + Enter`** | Tezkor Terminal | Kitty GPU-tezlatilgan terminali |
 | **`Win + C`** | Kod muharriri | VS Code / Cursor / Neovim |
-| **`Win + B`** | Veb brauzer | Cachy-Browser / Firefox |
-| **`Win + G`** | Git boshqaruvi | Lazygit (Terminal Git UI) |
-| **`Win + M`** | Konteynerlar boshqaruvi | Lazydocker (Docker/Podman UI) |
+| **`Win + B`** | Internet brauzer | Cachy-Browser / Firefox |
+| **`Win + G`** | Git boshqaruvi | Lazygit (Terminalda Git bilan ishlash) |
+| **`Win + M`** | Konteynerlar boshqaruvi | Lazydocker (Docker va Podman UI) |
+| **`Win + Q`** | Oynani yopish | Faol oynani darhol yopadi |
 
 ---
 
@@ -41,60 +51,62 @@ Kod yozish jarayonida qo'lni klaviaturadan uzmaslik uchun:
 
 VibeOS tizimida mahalliy (local) va bulutli (cloud) AI vositalari birlashtirilgan:
 
-### Mahalliy Ollama (Local LLM)
-Tizim ichida Ollama xizmati mavjud. Internetisiz, to'liq shaxsiy modelingizni ishlatish uchun:
+### Mahalliy Ollama (Internet talab qilmaydigan AI)
+Ollama xizmatini yoqish:
 ```bash
-# Ollama xizmatini yoqish:
 systemctl --user start ollama
+```
 
-# Kodlash uchun eng yaxshi yengil modellarni yuklab olish:
+Kod yozish uchun maxsus modellarni o'rnatish:
+```bash
 ollama run qwen2.5-coder:7b
 # yoki
 ollama run deepseek-coder-v2:16b
 ```
 
-### Terminal AI Assistant: `vibe-ai-chat`
-Terminalda to'g'ridan-to'g'ri `vibe-ai-chat` deb yozing yoki istalgan vaqtda **`Win + Space`** ni bosing.
+### Tezkor AI Yordamchi:
+Istalgan vaqtda **`Win + Space`** tugmasini bosing yoki terminalda:
+```bash
+vibe-ai-chat
+```
 
 ---
 
 ## 🛠️ 4. Tezkor Paket Menejerlari & Runtimes
 
-VibeOS dunyodagi eng tezkor vositalar bilan jihozlangan:
-
-- **Python:** `uv` o'rnatilgan (`pip` dan 10-100 barobar tezroq!):
+- **Python (uv):** Dunyodagi eng tezkor paket o'rnatgich:
   ```bash
   uv venv
   uv pip install fastapi uvicorn
   ```
-- **JavaScript / TypeScript:** `bun` o'rnatilgan:
+- **JavaScript / TypeScript (bun):**
   ```bash
   bun create next-app
   bun run dev
   ```
-- **Rust:** `rustup` tayyor:
+- **Rust (rustup):**
   ```bash
   rustup default stable
   ```
-- **Tizim paketlari:**
+- **Tizim dasturlarini o'rnatish:**
   ```bash
-  # Standart Arch va CachyOS repolaridan:
-  sudo pacman -Syu paket_nomi
-  
+  # Rasmiy repolardan:
+  sudo pacman -Syu dastur_nomi
+
   # AUR (Arch User Repository) dan:
-  paru -S paket_nomi
+  paru -S dastur_nomi
   ```
 
 ---
 
-## 🎨 5. Terminal Vibe & CLI Vositalari
+## 🎨 5. Terminal Qisqartmalari (Aliases)
 
-- `ff` yoki `fastfetch` — Tizim ma'lumotlari va VibeOS logosi
-- `lg` — `lazygit` ni ishga tushirish
-- `ld` — `lazydocker` ni ishga tushirish
-- `ls` o'rniga `eza` (chiroyli ranglar va ikonalar)
-- `cat` o'rniga `bat` (kod sintaksisi ranglari bilan)
-- `cd` o'rniga `z` (`zoxide` aqlli katalog o'tish)
+- `ff` — VibeOS logosi va tizim holati (Fastfetch)
+- `lg` — Lazygit (Git interfeysi)
+- `ld` — Lazydocker (Docker interfeysi)
+- `ls` o'rniga `eza` (rang-barang va ikonkali ro'yxat)
+- `cat` o'rniga `bat` (kod sintaksisi bilan)
+- `cd` o'rniga `z` (aqlli papkaga o'tish)
 
 ---
-*VibeOS - Code with Flow, Speed, and Vibe!*
+*VibeOS — Muallif: backandchi. O'zbek dasturchilari uchun maxsus yaratilgan.*
