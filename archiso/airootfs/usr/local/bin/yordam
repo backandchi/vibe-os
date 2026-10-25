@@ -1,0 +1,28 @@
+#!/bin/bash
+# VibeOS O'zbekcha Aqlli Yordamchi
+# Muallif: backandchi
+CAT=${1:-all}
+case "$CAT" in
+    git)
+        echo "📚 Git bo'yicha tezkor yordam:"
+        echo "  lg            - Lazygit terminal interfeysini ochish"
+        echo "  vibe undo     - Loyihani oldingi daqiqaga qaytarish"
+        ;;
+    docker)
+        echo "🐳 Docker bo'yicha tezkor yordam:"
+        echo "  ld            - Lazydocker terminal interfeysini ochish"
+        echo "  vibe clean    - Docker xotirasini bo'shatish"
+        ;;
+    hotkeys)
+        echo "⌨️ Qisqartmalar:"
+        echo "  Win + I       - Vibe Control Center"
+        echo "  Win + Space   - AI Scratchpad"
+        echo "  Win + Z       - Vaqt Mashinasi (Ghost Git)"
+        echo "  Win + X       - Vibe Lens (Screen to Code)"
+        echo "  Win + F11     - Zen Mode (Lo-Fi Music)"
+        echo "  Alt + Enter   - Auto-Healer (Xatolarni tuzatuvchi)"
+        ;;
+    *)
+        vibe-wiki
+        ;;
+esac
