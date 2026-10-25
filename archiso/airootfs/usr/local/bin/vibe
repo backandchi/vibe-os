@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+# ==========================================================
+# ⚡ VibeOS System Companion CLI
+# Muallif: backandchi | Foydalanish: vibe "buyruq" yoki vibe <subcommand>
+# ==========================================================
+
+import sys, os, subprocess
+
+def main():
+    if len(sys.argv) < 2:
+        os.system("vibe-control")
+        return
+
+    sub = sys.argv[1].lower()
+
+    if sub in ["control", "menu", "gui"]:
+        os.system("vibe-control")
+    elif sub == "mode":
+        mode = sys.argv[2] if len(sys.argv) > 2 else "code"
+        os.system(f"vibe-mode {mode}")
+    elif sub == "share":
+        port = sys.argv[2] if len(sys.argv) > 2 else "3000"
+        os.system(f"vibe-tunnel {port}")
+    elif sub == "agent":
+        target = sys.argv[2] if len(sys.argv) > 2 else "local"
+        if target == "claude": os.system("claude")
+        elif target == "aider": os.system("aider")
+        elif target == "gemini": os.system("gemini")
+        else: os.system("ollama run qwen2.5-coder:7b")
+    elif sub == "clean":
+        os.system("vibe-clean")
+    elif sub == "undo":
+        os.system("vibe-ghost-git")
+    elif sub == "wiki":
+        os.system("vibe-wiki")
+    else:
+        # Tabiiy tildagi savol yoki tizim vazifasi
+        prompt = " ".join(sys.argv[1:])
+        print(f"\033[1;36m🤖 Vibe Hamroh tahlil qilmoqda: \033[0m'{prompt}'")
+        ai_query = f"Quyidagi Linux vazifasi uchun eng xavfsiz va aniq bash buyrug'ini o'zbekcha qisqa izoh bilan ber: {prompt}"
+        if shutil.which("ollama"):
+            os.system(f"ollama run qwen2.5-coder:7b \"{ai_query}\"")
+        else:
+            print("💡 Maslahat: 'vibe-wiki' orqali buyruqlarni ko'rishingiz mumkin.")
+
+if __name__ == "__main__":
+    import shutil
+    main()
