@@ -1,0 +1,21 @@
+#!/bin/bash
+# VibeOS Tunnel - Instant QR Localhost Share
+# Muallif: backandchi
+PORT=${1:-3000}
+clear
+echo -e "\033[1;36m=== 🚀 VibeOS Tunnel: Localhost:${PORT} -> Global Internet ===\033[0m"
+echo "Xavfsiz tunnel o'rnatilmoqda..."
+cloudflared tunnel --url "http://localhost:${PORT}" 2>&1 | tee /tmp/cf_tunnel.log &
+PID=$!
+sleep 4
+URL=$(grep -o 'https://[-a-zA-Z0-9.]*\.trycloudflare\.com' /tmp/cf_tunnel.log | head -n 1)
+if [[ -n "$URL" ]]; then
+    echo -e "\n✔ Havola: \033[1;32m$URL\033[0m"
+    echo "$URL" | wl-copy
+    if command -v qrencode >/dev/null 2>&1; then
+        echo "📱 Mobil telefonda ochish uchun QR-kod:"
+        qrencode -t UTF8 "$URL"
+    fi
+fi
+trap "kill $PID 2>/dev/null; exit 0" INT
+wait $PID
