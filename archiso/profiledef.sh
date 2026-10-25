@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2034
 
-iso_name="cachyos"
-iso_label="COS_$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y%m)"
-iso_publisher="CachyOS <https://cachyos.org>"
-iso_application="CachyOS Live/Rescue DVD"
+iso_name="vibeos"
+iso_label="VIBE_$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y%m)"
+iso_publisher="VibeOS Project <https://github.com/backandchi/vibe-os>"
+iso_application="VibeOS Live/Installation Media for Vibe Coding"
 iso_version="$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y.%m.%d)"
 install_dir="arch"
 buildmodes=('iso')
@@ -34,4 +34,6 @@ file_permissions=(
   ["/usr/local/bin/prepare-live-desktop.sh"]="0:0:755"
   ["/usr/local/bin/nvidia-module-loader"]="0:0:755"
   ["/usr/local/bin/pkexec-wrapper"]="0:0:755"
+  ["/usr/local/bin/vibe-wiki"]="0:0:755"
+  ["/usr/local/bin/vibe-ai-chat"]="0:0:755"
 )
