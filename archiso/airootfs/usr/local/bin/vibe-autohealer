@@ -1,0 +1,15 @@
+#!/bin/bash
+# VibeOS Auto-Healer - Avtomatik Kod Tuzatuvchi (Alt + Enter)
+# Muallif: backandchi
+clear
+echo -e "\033[1;36m=== 🩺 VibeOS Auto-Healer (Xatolarni Davolovchi) ===\033[0m"
+LAST_ERR=$(history 5 | tail -n 2)
+GIT_DIFF=$(git diff -U2 2>/dev/null | head -n 50)
+PROMPT="Terminal xatosi va loyiha kodini tuzatish uchun faqat aniq o'zbekcha yechim va patch ber: $LAST_ERR $GIT_DIFF"
+
+if command -v ollama >/dev/null 2>&1; then
+    ollama run qwen2.5-coder:7b "$PROMPT"
+else
+    echo "Lokal AI tayyorlanmoqda. Fayl sintaksisi yoki importlarni tekshiring."
+fi
+read -p "\nDavom etish uchun [Enter] bosing..."
