@@ -68,14 +68,35 @@ jobs:
           path: out/desktop/*
           retention-days: 14
 
+      - name: Prepare Release Files
+        run: |
+          mkdir -p release_files
+          cp out/desktop/*.sha256 release_files/ 2>/dev/null || true
+          cp out/desktop/*.sha1 release_files/ 2>/dev/null || true
+          cp out/desktop/*.pkgs.txt release_files/ 2>/dev/null || true
+          # Split ISO into <2GB chunks for GitHub Release asset limits
+          split -b 1800M out/desktop/*.iso release_files/vibeos-desktop-linux-${{ steps.date.outputs.builddate }}.iso.part_
+          ls -lh release_files/
+
       - name: Create Release
         if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/master'
+        continue-on-error: true
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.date.outputs.builddate }}
           name: VibeOS Linux Release ${{ steps.date.outputs.builddate }}
           draft: false
           prerelease: false
-          files: out/desktop/*
+          files: release_files/*
+          body: |
+            ## ⚡ VibeOS Linux Release ${{ steps.date.outputs.builddate }}
+            
+            **Muallif / Creator:** [backandchi](https://github.com/backandchi)
+            
+            ### 📥 Yuklab olish (Download):
+            - **To'liq ISO:** [GitHub Actions Artifacts](https://github.com/backandchi/vibe-os/actions/runs/${{ github.run_id }}) bo'limidan bitta fayl qilib yuklab olishingiz mumkin.
+            - **Bo'lingan qismlar:** Pastdagi `part_aa` va `part_ab` fayllarini yuklab olib, birlashtiring:
+              - **Windows (CMD):** `copy /b vibeos*.part_aa + vibeos*.part_ab vibeos.iso`
+              - **Linux / Mac:** `cat vibeos*.part_* > vibeos.iso`
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
