@@ -1,0 +1,11 @@
+#!/bin/bash
+# VibeOS Sandbox - Xavfsiz Izolyatsiya qilingan muhit
+# Muallif: backandchi
+echo "🛡️ VibeOS Sandbox: Dastur izolyatsiya qilingan qundonda ishga tushirilmoqda..."
+if command -v bwrap >/dev/null 2>&1; then
+    bwrap --ro-bind / / --dev /dev --proc /proc --tmpfs /tmp --tmpfs "$HOME" "$@"
+else
+    # Fallback to standard execution with warning
+    echo "⚠️ Bubblewrap topilmadi, standart muhitda ishlaydi."
+    exec "$@"
+fi
