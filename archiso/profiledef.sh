@@ -4,14 +4,11 @@
 iso_name="vibeos"
 iso_label="VIBE_$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y%m)"
 iso_publisher="VibeOS Project <https://github.com/backandchi/vibe-os>"
-iso_application="VibeOS Live/Installation Media for Vibe Coding"
+iso_application="VibeOS Live/Installation Media (Creator: backandchi)"
 iso_version="$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y.%m.%d)"
 install_dir="arch"
 buildmodes=('iso')
-## GRUB
 bootmodes=('bios.syslinux' 'uefi.grub')
-## systemd-boot
-#bootmodes=('bios.syslinux' 'uefi.systemd-boot')
 arch="x86_64"
 pacman_conf="pacman.conf"
 airootfs_image_type="squashfs"
@@ -33,6 +30,17 @@ file_permissions=(
   ["/usr/local/bin/removeun-online"]="0:0:755"
   ["/usr/local/bin/prepare-live-desktop.sh"]="0:0:755"
   ["/usr/local/bin/pkexec-wrapper"]="0:0:755"
+  ["/usr/local/bin/vibe"]="0:0:755"
+  ["/usr/local/bin/vibe-control"]="0:0:755"
   ["/usr/local/bin/vibe-wiki"]="0:0:755"
   ["/usr/local/bin/vibe-ai-chat"]="0:0:755"
+  ["/usr/local/bin/vibe-autohealer"]="0:0:755"
+  ["/usr/local/bin/vibe-ghost-git"]="0:0:755"
+  ["/usr/local/bin/vibe-lens"]="0:0:755"
+  ["/usr/local/bin/vibe-flow"]="0:0:755"
+  ["/usr/local/bin/vibe-tunnel"]="0:0:755"
+  ["/usr/local/bin/vibe-sandbox"]="0:0:755"
+  ["/usr/local/bin/vibe-mode"]="0:0:755"
+  ["/usr/local/bin/vibe-clean"]="0:0:755"
+  ["/usr/local/bin/yordam"]="0:0:755"
 )
