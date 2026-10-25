@@ -1,0 +1,27 @@
+#!/bin/bash
+# VibeOS AI Scratchpad Launcher
+
+clear
+cat /etc/vibe-logo.ascii 2>/dev/null
+echo ""
+echo "=========================================================="
+echo "          🤖 VibeOS AI Scratchpad & Coding Assistant      "
+echo "=========================================================="
+echo ""
+
+if systemctl is-active --quiet ollama || systemctl --user is-active --quiet ollama; then
+    echo "✔ Ollama xizmati faol."
+    echo "Tavsiya etilgan modellar: qwen2.5-coder, deepseek-coder"
+    echo ""
+    read -p "Model nomini kiriting [default: qwen2.5-coder]: " model
+    model=${model:-qwen2.5-coder}
+    ollama run "$model"
+else
+    echo "💡 Ollama xizmati ishga tushirilmagan."
+    echo "1. Mahalliy Ollama ishga tushirish: systemctl --user start ollama"
+    echo "2. Yoki online Claude/Gemini/OpenAI API kalitlarini ishlatish."
+    echo ""
+    echo "Vibe Wiki qo'llanmasini ochish uchun 'vibe-wiki' buyrug'ini tering."
+    echo ""
+    read -p "Chiqish uchun [Enter] tugmasini bosing..."
+fi
