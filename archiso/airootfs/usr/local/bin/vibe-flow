@@ -1,0 +1,15 @@
+#!/bin/bash
+# VibeOS Flow - Zen Mode + LoFi (Win + F11)
+# Muallif: backandchi
+SFILE="/tmp/vibe_flow.state"
+if [[ -f "$SFILE" ]]; then
+    rm -f "$SFILE"
+    killall mpv 2>/dev/null || true
+    makoctl mode -r dnd 2>/dev/null || true
+    notify-send "Vibe Flow" "⚡ Standart rejimga qaytildi!"
+else
+    touch "$SFILE"
+    makoctl mode -a dnd 2>/dev/null || true
+    notify-send "Vibe Flow" "🧘 Zen rejimi: Bildirishnomalar o'chirildi, diqqatni jamlang!"
+    mpv --no-video --volume=35 "https://play.streamafrica.net/lofiradio" >/dev/null 2>&1 &
+fi
