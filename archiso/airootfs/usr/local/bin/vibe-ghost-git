@@ -1,0 +1,31 @@
+#!/bin/bash
+# VibeOS Ghost Git - Vaqt Mashinasi (Win + Z)
+# Muallif: backandchi
+GDIR=".vibe-ghost"
+if [[ "$1" == "--snapshot" ]]; then
+    mkdir -p "$GDIR"
+    tar --exclude="./.git" --exclude="./node_modules" --exclude="./.vibe-ghost" -czf "$GDIR/snap_$(date +%Y%m%d_%H%M%S).tar.gz" . 2>/dev/null
+    ls -dt $GDIR/snap_*.tar.gz 2>/dev/null | tail -n +31 | xargs -r rm -f
+    exit 0
+fi
+
+clear
+echo -e "\033[1;36m=== ⏳ VibeOS Ghost Git: Vaqt Mashinasi ===\033[0m"
+if [[ ! -d "$GDIR" || -z "$(ls -A $GDIR 2>/dev/null)" ]]; then
+    echo "Snapshotlar mavjud emas. Yangi snapshot yaratilmoqda..."
+    mkdir -p "$GDIR"
+    tar --exclude="./.git" -czf "$GDIR/snap_$(date +%Y%m%d_%H%M%S).tar.gz" . 2>/dev/null
+    echo "✔ Boshlang'ich snapshot saqlandi."
+    read -p "Chiqish uchun [Enter] bosing..."
+    exit 0
+fi
+
+select SNAP in $(ls -r $GDIR/snap_*.tar.gz 2>/dev/null) "Chiqish"; do
+    if [[ "$SNAP" == "Chiqish" || -z "$SNAP" ]]; then break; fi
+    read -p "Kodni $SNAP holatiga qaytarishni tasdiqlaysizmi? [h/Y]: " ANS
+    if [[ "$ANS" =~ ^[hHyY]$ ]]; then
+        tar -xzf "$SNAP"
+        echo -e "\033[1;32m✔ Kod tiklandi!\033[0m"
+    fi
+    break
+done
