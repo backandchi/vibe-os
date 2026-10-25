@@ -1,0 +1,23 @@
+#!/bin/bash
+# VibeOS Mode Switcher (code / game / eco)
+# Muallif: backandchi
+MODE=${1:-code}
+case "$MODE" in
+    game)
+        echo "🎮 Game Mode yoqildi! Fon AI to'xtatildi, GPU maksimal unumdorlikka o'tkazildi."
+        systemctl --user stop ollama 2>/dev/null || true
+        gamemoded -r 2>/dev/null || true
+        notify-send "Vibe Mode" "🎮 Game Mode: Maksimal FPS va Past Kechikish!"
+        ;;
+    eco)
+        echo "🌱 Eco Mode yoqildi! Batareya tejalmoqda."
+        powerprofilesctl set power-saver 2>/dev/null || true
+        notify-send "Vibe Mode" "🌱 Eco Mode: Energiya tejash faol."
+        ;;
+    *)
+        echo "⚡ Code Mode yoqildi! CPU barcha dasturchi dasturlariga yo'naltirildi."
+        systemctl --user start ollama 2>/dev/null || true
+        powerprofilesctl set performance 2>/dev/null || true
+        notify-send "Vibe Mode" "⚡ Code Mode: Maksimal Dasturlash Quvvati!"
+        ;;
+esac
