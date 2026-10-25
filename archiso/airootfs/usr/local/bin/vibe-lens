@@ -1,0 +1,17 @@
+#!/bin/bash
+# VibeOS Lens - Screen to Code (Win + X)
+# Muallif: backandchi
+IMG="/tmp/vibe_lens_$(date +%s).png"
+grim -g "$(slurp)" "$IMG"
+if [[ ! -f "$IMG" ]]; then exit 0; fi
+
+notify-send "Vibe Lens" "🔍 Ekran surati olindi. AI tahlil qilmoqda..."
+kitty --title "Vibe Lens AI" -e bash -c "
+echo '🤖 Vibe Lens: Ekrandagi rasm kodga o'girilmoqda...'
+if command -v ollama >/dev/null 2>&1; then
+    ollama run llava 'Ushbu rasmdagi UI elementni chiroyli Tailwind HTML kodiga aylantirib ber: $IMG' | tee /tmp/lens_code.txt
+fi
+cat /tmp/lens_code.txt 2>/dev/null | wl-copy
+echo -e '\n✔ Natija clipboard (xotira)ga ko'chirildi!'
+read -p 'Yopish uchun [Enter] bosing...'
+"
