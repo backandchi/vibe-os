@@ -1,0 +1,11 @@
+#!/bin/bash
+# VibeOS Wiki Viewer
+WIKI_FILE="/usr/share/vibe-wiki/README.md"
+
+if command -v glow >/dev/null 2>&1; then
+    glow -p "$WIKI_FILE"
+elif command -v bat >/dev/null 2>&1; then
+    bat --style=plain "$WIKI_FILE"
+else
+    less "$WIKI_FILE"
+fi
