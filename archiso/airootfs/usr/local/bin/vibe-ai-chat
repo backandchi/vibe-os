@@ -1,27 +1,30 @@
 #!/bin/bash
-# VibeOS AI Scratchpad Launcher
+# VibeOS AI Yordamchisi va Scratchpad Launcher
+# Muallif / Creator: backandchi
 
 clear
 cat /etc/vibe-logo.ascii 2>/dev/null
 echo ""
 echo "=========================================================="
-echo "          🤖 VibeOS AI Scratchpad & Coding Assistant      "
+echo "      🤖 VibeOS AI Yordamchisi (Muallif: backandchi)     "
 echo "=========================================================="
 echo ""
 
 if systemctl is-active --quiet ollama || systemctl --user is-active --quiet ollama; then
-    echo "✔ Ollama xizmati faol."
-    echo "Tavsiya etilgan modellar: qwen2.5-coder, deepseek-coder"
+    echo "✔ Ollama sun'iy intellekt xizmati faol ishlamoqda."
+    echo "Kod yozish uchun eng yaxshi modellar: qwen2.5-coder, deepseek-coder"
     echo ""
-    read -p "Model nomini kiriting [default: qwen2.5-coder]: " model
+    read -p "Qaysi model bilan ishlamoqchisiz? [standart: qwen2.5-coder]: " model
     model=${model:-qwen2.5-coder}
+    echo "'$model' modeli bilan suhbat boshlanmoqda..."
     ollama run "$model"
 else
-    echo "💡 Ollama xizmati ishga tushirilmagan."
-    echo "1. Mahalliy Ollama ishga tushirish: systemctl --user start ollama"
-    echo "2. Yoki online Claude/Gemini/OpenAI API kalitlarini ishlatish."
+    echo "💡 Mahalliy Ollama xizmati hozircha o'chiq."
+    echo "Uni yoqish uchun quyidagi buyruqni bering:"
+    echo "   systemctl --user start ollama"
     echo ""
-    echo "Vibe Wiki qo'llanmasini ochish uchun 'vibe-wiki' buyrug'ini tering."
+    echo "Yoki onlayn API kalitlar (Claude / Gemini / ChatGPT) orqali ishlang."
+    echo "To'liq qo'llanmani ko'rish uchun terminalda 'vibe-wiki' deb yozing."
     echo ""
-    read -p "Chiqish uchun [Enter] tugmasini bosing..."
+    read -p "Dasturdan chiqish uchun [Enter] tugmasini bosing..."
 fi
