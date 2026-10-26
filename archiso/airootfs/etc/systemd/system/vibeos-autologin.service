@@ -1,0 +1,18 @@
+[Unit]
+Description=VibeOS Direct KDE Plasma Launcher
+After=systemd-user-sessions.service plymouth-quit-wait.service
+Conflicts=getty@tty1.service
+
+[Service]
+ExecStart=/usr/bin/agetty --autologin liveuser --noclear tty1 $TERM
+Type=simple
+Restart=always
+RestartSec=0
+UtmpIdentifier=tty1
+TTYPath=/dev/tty1
+TTYReset=yes
+TTYVHangup=yes
+TTYVTDisallocate=yes
+
+[Install]
+WantedBy=graphical.target
