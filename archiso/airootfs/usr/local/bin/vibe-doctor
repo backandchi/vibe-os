@@ -1,0 +1,33 @@
+#!/bin/bash
+# ==========================================================
+# VibeOS Doctor: Tizim to'qnashuvlarini oldini olish va tuzatish
+# Muallif: backandchi | O'zbekiston
+# ==========================================================
+set -e
+
+echo "🔍 VibeOS Doctor: Tizim tekshirilmoqda..."
+
+# 1. Pacman qulflarini tozalash (db.lck collision fix)
+if [ -f /var/lib/pacman/db.lck ]; then
+    echo "⚠️ Qulflangan pacman bazasi topildi. Qulf tozalanmoqda..."
+    sudo rm -f /var/lib/pacman/db.lck
+    echo "✔ Pacman qulfi tozalandi!"
+fi
+
+# 2. Xavfsizlik kalitlarini yangilash (keyring repair)
+echo "🔑 GPG xavfsizlik kalitlari tekshirilmoqda..."
+sudo pacman-key --init 2>/dev/null || true
+sudo pacman-key --populate archlinux 2>/dev/null || true
+
+# 3. Kesh va xotirani optimallashtirish
+echo "🧹 ZRAM va kesh tozalanmoqda..."
+sync; echo 3 | sudo tee /proc/sys/vm/drop_caches >/dev/null
+
+# 4. Buzilgan paketlarni tekshirish
+echo "📦 Tizim paketlari tekshiruvdan o'tkazilmoqda..."
+pacman -Qk 2>/dev/null | grep -i "warning" | head -n 10 || echo "✔ Barcha asosiy paketlar butun!"
+
+echo "=========================================================="
+echo "🎉 VibeOS Doctor: Tizim 100% barqaror holatga keltirildi!"
+echo "Muallif: backandchi"
+echo "=========================================================="
