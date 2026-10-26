@@ -1,38 +1,39 @@
 #!/bin/bash
 set -e
 
-echo "=========================================================="
-echo "🚀 VIBEOS (ENG SO'NGGI VERSIYA) ISHGA TUSHIRILMOQDA..."
-echo "Muallif: backandchi | O'zbekiston"
-echo "=========================================================="
-
-# Eski kesh va fayllarni tozalash
-rm -f vibeos.iso vibeos_v2.iso
-
-if [ ! -f vibeos_final.iso ]; then
-    echo ">>> 1/3: Eng yangi VibeOS ISO yuklab olinmoqda..."
-    curl -L https://github.com/backandchi/vibe-os/releases/download/v20261026/vibeos-desktop-linux-20261026.iso.part_aa > vibeos_final.iso
-    curl -L https://github.com/backandchi/vibe-os/releases/download/v20261026/vibeos-desktop-linux-20261026.iso.part_ab >> vibeos_final.iso
-    echo "✔ Yangi ISO tayyorlandi ($(ls -lh vibeos_final.iso | awk '{print $5}'))"
-fi
-
-echo ">>> 2/3: Kerakli paketlar tekshirilmoqda..."
-if ! command -v qemu-system-x86_64 &>/dev/null || ! command -v websockify &>/dev/null; then
-    sudo apt-get update -qq
-    sudo apt-get install -y -qq qemu-system-x86 novnc websockify
-fi
-
-echo ">>> 3/3: Virtual ekran yoqilmoqda..."
+echo ">>> QEMU va websockify tozalanmoqda..."
+sudo fuser -k 6080/tcp 2>/dev/null || true
+sudo fuser -k 5901/tcp 2>/dev/null || true
 killall -9 qemu-system-x86_64 websockify 2>/dev/null || true
 sleep 1
-qemu-system-x86_64 -m 3G -smp 2 -cdrom vibeos_final.iso -vga virtio -vnc :1 &
-sleep 2
-websockify --web /usr/share/novnc 6080 localhost:5901 &
 
+# noVNC index.html ni kafolatli yaratish (404 bo'lmasligi uchun)
+if [ -f /usr/share/novnc/vnc.html ] && [ ! -f /usr/share/novnc/index.html ]; then
+    sudo ln -s /usr/share/novnc/vnc.html /usr/share/novnc/index.html 2>/dev/null || sudo cp /usr/share/novnc/vnc.html /usr/share/novnc/index.html 2>/dev/null || true
+fi
+
+# ISO faylini tekshirish (agar bo'lmasa yuklash)
+ISO_FILE="vibeos_final.iso"
+if [ ! -f "$ISO_FILE" ]; then
+    echo ">>> ISO yuklab olinmoqda..."
+    curl -L https://github.com/backandchi/vibe-os/releases/download/v20261026/vibeos-desktop-linux-20261026.iso.part_aa > "$ISO_FILE"
+    curl -L https://github.com/backandchi/vibe-os/releases/download/v20261026/vibeos-desktop-linux-20261026.iso.part_ab >> "$ISO_FILE"
+fi
+
+echo ">>> QEMU virtual mashinasi yoqilmoqda..."
+qemu-system-x86_64 -m 3G -smp 2 -cdrom "$ISO_FILE" -vga virtio -vnc 127.0.0.1:1 &
 sleep 2
+
+echo ">>> WebSockify yoqilmoqda..."
+websockify --web /usr/share/novnc 6080 127.0.0.1:5901 >/tmp/ws.log 2>&1 &
+sleep 2
+
+# Portni avtomat public qilish
+gh codespace ports visibility 6080:public 2>/dev/null || true
+
 echo ""
 echo "=========================================================="
-echo "🎉 VIBEOS JONLI ISHGA TUSHDI!"
-echo "Havola orqali oching:"
-echo "👉 https://hallowed-phantom-gx65rrvwx4j39p6-6080.app.github.dev"
+echo "✔ VIBEOS 100% TAYYOR VA ISHLAMOQDA!"
+echo "Havola (to'g'ridan-to'g'ri bosing):"
+echo "👉 https://${CODESPACE_NAME}-6080.app.github.dev/vnc.html"
 echo "=========================================================="
