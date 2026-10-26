@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2034
 
-iso_name="vibeos"
-iso_label="VIBE_$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y%m)"
+iso_name="vibeos-desktop-linux"
+iso_label="VIBEOS_$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y%m)"
 iso_publisher="VibeOS Project <https://github.com/backandchi/vibe-os>"
 iso_application="VibeOS Live/Installation Media (Creator: backandchi)"
 iso_version="$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y.%m.%d)"
@@ -17,7 +17,8 @@ file_permissions=(
   ["/etc/shadow"]="0:0:400"
   ["/etc/gshadow"]="0:0:400"
   ["/root"]="0:0:750"
-  ["/etc/polkit-1/rules.d"]="0:0:750"
+  ["/etc/polkit-1"]="0:0:755"
+  ["/etc/polkit-1/rules.d"]="0:0:755"
   ["/etc/sudoers.d"]="0:0:750"
   ["/etc/sudoers.d/g_wheel"]="0:0:440"
   ["/root/.automated_script.sh"]="0:0:755"
@@ -32,6 +33,7 @@ file_permissions=(
   ["/usr/local/bin/pkexec-wrapper"]="0:0:755"
   ["/usr/local/bin/vibe"]="0:0:755"
   ["/usr/local/bin/vibe-control"]="0:0:755"
+  ["/usr/local/bin/vibe-doctor"]="0:0:755"
   ["/usr/local/bin/vibe-wiki"]="0:0:755"
   ["/usr/local/bin/vibe-ai-chat"]="0:0:755"
   ["/usr/local/bin/vibe-autohealer"]="0:0:755"
