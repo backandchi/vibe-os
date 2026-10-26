@@ -1,0 +1,10 @@
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = cachyos-kde-settings
+
+[Action]
+Description = Applying VibeOS Cyber-Glass KDE Plasma Theme...
+When = PostTransaction
+Exec = /usr/bin/bash -c "mkdir -p /etc/skel/.config && sed -i 's|ColorScheme=.*|ColorScheme=BreezeDark|g' /etc/skel/.config/kdeglobals 2>/dev/null || true"
