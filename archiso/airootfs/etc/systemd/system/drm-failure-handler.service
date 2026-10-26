@@ -1,0 +1,4 @@
+[Unit]
+Description=Masked by VibeOS
+[Service]
+ExecStart=/bin/true
