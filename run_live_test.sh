@@ -1,39 +1,46 @@
 #!/bin/bash
 set -e
 
-echo ">>> QEMU va websockify tozalanmoqda..."
-sudo fuser -k 6080/tcp 2>/dev/null || true
-sudo fuser -k 5901/tcp 2>/dev/null || true
+echo "=========================================================="
+echo "🚀 VibeOS: Yangi toza 8080-portda ishga tushirilmoqda..."
+echo "Muallif: backandchi | O'zbekiston"
+echo "=========================================================="
+
+# 1. Eski barcha jarayonlarni tozalash
 killall -9 qemu-system-x86_64 websockify 2>/dev/null || true
+sudo fuser -k 8080/tcp 2>/dev/null || true
+sudo fuser -k 5902/tcp 2>/dev/null || true
 sleep 1
 
-# noVNC index.html ni kafolatli yaratish (404 bo'lmasligi uchun)
+# 2. noVNC index.html kafolati
 if [ -f /usr/share/novnc/vnc.html ] && [ ! -f /usr/share/novnc/index.html ]; then
     sudo ln -s /usr/share/novnc/vnc.html /usr/share/novnc/index.html 2>/dev/null || sudo cp /usr/share/novnc/vnc.html /usr/share/novnc/index.html 2>/dev/null || true
 fi
 
-# ISO faylini tekshirish (agar bo'lmasa yuklash)
-ISO_FILE="vibeos_final.iso"
-if [ ! -f "$ISO_FILE" ]; then
+# 3. ISO fayli tekshirish
+ISO="vibeos_final.iso"
+if [ ! -f "$ISO" ]; then
     echo ">>> ISO yuklab olinmoqda..."
-    curl -L https://github.com/backandchi/vibe-os/releases/download/v20261026/vibeos-desktop-linux-20261026.iso.part_aa > "$ISO_FILE"
-    curl -L https://github.com/backandchi/vibe-os/releases/download/v20261026/vibeos-desktop-linux-20261026.iso.part_ab >> "$ISO_FILE"
+    curl -L https://github.com/backandchi/vibe-os/releases/download/v20261026/vibeos-desktop-linux-20261026.iso.part_aa > "$ISO"
+    curl -L https://github.com/backandchi/vibe-os/releases/download/v20261026/vibeos-desktop-linux-20261026.iso.part_ab >> "$ISO"
 fi
 
-echo ">>> QEMU virtual mashinasi yoqilmoqda..."
-qemu-system-x86_64 -m 3G -smp 2 -cdrom "$ISO_FILE" -vga virtio -vnc 127.0.0.1:1 &
+# 4. QEMU ni toza :2 (5902) ekranda yoqish
+echo ">>> QEMU ishga tushmoqda..."
+qemu-system-x86_64 -m 3G -smp 2 -cdrom "$ISO" -vga virtio -vnc 127.0.0.1:2 &
 sleep 2
 
-echo ">>> WebSockify yoqilmoqda..."
-websockify --web /usr/share/novnc 6080 127.0.0.1:5901 >/tmp/ws.log 2>&1 &
+# 5. WebSockify ni 8080-portda yoqish
+echo ">>> WebSockify 8080-portda ishga tushmoqda..."
+websockify --web /usr/share/novnc 8080 127.0.0.1:5902 >/tmp/ws8080.log 2>&1 &
 sleep 2
 
-# Portni avtomat public qilish
-gh codespace ports visibility 6080:public 2>/dev/null || true
+# 6. 8080 portini ochish
+gh codespace ports visibility 8080:public -c hallowed-phantom-gx65rrvwx4j39p6 2>/dev/null || true
 
 echo ""
 echo "=========================================================="
-echo "✔ VIBEOS 100% TAYYOR VA ISHLAMOQDA!"
-echo "Havola (to'g'ridan-to'g'ri bosing):"
-echo "👉 https://${CODESPACE_NAME}-6080.app.github.dev/vnc.html"
+echo "🎉 VIBEOS 8080-PORTDA ISHGA TUSHDI!"
+echo "Havola orqali oching:"
+echo "👉 https://hallowed-phantom-gx65rrvwx4j39p6-8080.app.github.dev/vnc.html"
 echo "=========================================================="
